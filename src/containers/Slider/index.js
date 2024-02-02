@@ -16,11 +16,12 @@ const Slider = () => {
         setIndex((indexPrev) =>
           byDateDesc && indexPrev < byDateDesc.length - 1 ? indexPrev + 1 : 0
         ),
-      9000
+      10000
     );
   };
 
   useEffect(() => {
+    
     nextCard();
   });
 
