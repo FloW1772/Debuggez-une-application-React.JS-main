@@ -11,18 +11,16 @@ const Slider = () => {
   );
 
   const nextCard = () => {
-    setTimeout(
-      () =>
+    
         setIndex((indexPrev) =>
           byDateDesc && indexPrev < byDateDesc.length - 1 ? indexPrev + 1 : 0
-        ),
-      10000
-    );
+        )
+  
   };
 
   useEffect(() => {
-    
-    nextCard();
+    const Intervalle= setInterval(nextCard,5000)
+    return ()=>{clearInterval(Intervalle)}
   });
 
   const changedSlide = (indexRadio) => {

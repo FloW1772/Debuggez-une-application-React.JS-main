@@ -7,7 +7,12 @@ import Button, { BUTTON_TYPES } from "../../components/Button";
 const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 1000); })
 
 const Form = ({ onSuccess, onError }) => {
+  const[name,setName]=useState("")
   const [sending, setSending] = useState(false);
+
+
+
+
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
@@ -16,6 +21,7 @@ const Form = ({ onSuccess, onError }) => {
       try {
         await mockContactApi();
         setSending(false);
+        onSuccess()
       } catch (err) {
         setSending(false);
         onError(err);
@@ -27,7 +33,7 @@ const Form = ({ onSuccess, onError }) => {
     <form onSubmit={sendContact}>
       <div className="row">
         <div className="col">
-          <Field placeholder="" label="Nom" />
+          <Field value={name} onChange={(e)=>setName(e.target.value)} placeholder="" label="Nom" />
           <Field placeholder="" label="Prénom" />
           <Select
             selection={["Personel", "Entreprise"]}
