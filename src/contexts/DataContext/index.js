@@ -19,28 +19,31 @@ export const api = {
 export const DataProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
-  const [last, setLast] = useState(null);
+  const [last, setLast] = useState(null); // Added state for last event
+
   const getData = useCallback(async () => {
     try {
-      const datasApi=await api.loadData()
+      const datasApi = await api.loadData();
       setData(datasApi);
-      const lastEvent=datasApi?.events.sort()[0]
-      setLast(lastEvent)
+
+      // Update last event using a separate sort and assignment in useEffect
+      setLast(datasApi?.events.sort((a, b) => new Date(b.date) - new Date(a.date))[0]); // Sort by date descending and grab first item
     } catch (err) {
       setError(err);
     }
   }, []);
+
   useEffect(() => {
-    if (data) return;
+    if (data) return; // Exit if data already loaded
     getData();
-  });
-  
+  }, [data, getData]); // Make getData rerun if data changes
+
   return (
     <DataContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
       value={{
         data,
-        last,
+        last, // Include last in the context value
         error,
       }}
     >
@@ -51,7 +54,7 @@ export const DataProvider = ({ children }) => {
 
 DataProvider.propTypes = {
   children: PropTypes.node.isRequired,
-}
+};
 
 export const useData = () => useContext(DataContext);
 
