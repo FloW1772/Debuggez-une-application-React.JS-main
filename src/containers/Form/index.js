@@ -8,6 +8,8 @@ const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 1000
 
 const Form = ({ onSuccess, onError }) => {
   const[name,setName]=useState("")
+  const[prenom,setPrenom]=useState("")
+  const[email,setEmail]=useState("")
   const [sending, setSending] = useState(false);
 
 
@@ -34,7 +36,7 @@ const Form = ({ onSuccess, onError }) => {
       <div className="row">
         <div className="col">
           <Field value={name} onChange={(e)=>setName(e.target.value)} placeholder="" label="Nom" />
-          <Field placeholder="" label="Prénom" />
+          <Field value={prenom} onChange={(e)=>setPrenom(e.target.value)} placeholder="" label="Prénom" />
           <Select
             selection={["Personel", "Entreprise"]}
             onChange={() => null}
@@ -42,7 +44,7 @@ const Form = ({ onSuccess, onError }) => {
             type="large"
             titleEmpty
           />
-          <Field placeholder="" label="Email" />
+          <Field value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="" label="Email" />
           <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
             {sending ? "En cours" : "Envoyer"}
           </Button>
