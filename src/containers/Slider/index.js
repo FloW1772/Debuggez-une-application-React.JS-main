@@ -11,16 +11,16 @@ const Slider = () => {
   );
 
   const nextCard = () => {
-    
-        setIndex((indexPrev) =>
-          byDateDesc && indexPrev < byDateDesc.length - 1 ? indexPrev + 1 : 0
-        )
-  
+
+    setIndex((indexPrev) =>
+      byDateDesc && indexPrev < byDateDesc.length - 1 ? indexPrev + 1 : 0
+    )
+
   };
 
   useEffect(() => {
-    const Intervalle= setInterval(nextCard,5000)
-    return ()=>{clearInterval(Intervalle)}
+    const Intervalle = setInterval(nextCard, 5000)
+    return () => { clearInterval(Intervalle) }
   });
 
   const changedSlide = (indexRadio) => {
@@ -32,9 +32,8 @@ const Slider = () => {
       {byDateDesc?.map((event, idx) => (
         <div
           key={event.title}
-          className={`SlideCard SlideCard--${
-            index === idx ? "display" : "hide"
-          }`}
+          className={`SlideCard SlideCard--${index === idx ? "display" : "hide"
+            }`}
         >
           <img src={event.cover} alt="forum" />
           <div className="SlideCard__descriptionContainer">

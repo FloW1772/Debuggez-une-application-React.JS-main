@@ -7,9 +7,9 @@ import Button, { BUTTON_TYPES } from "../../components/Button";
 const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 800); })
 
 const Form = ({ onSuccess, onError }) => {
-  const[name,setName]=useState("")
-  const[prenom,setPrenom]=useState("")
-  const[email,setEmail]=useState("")
+  const [name, setName] = useState("")
+  const [prenom, setPrenom] = useState("")
+  const [email, setEmail] = useState("")
   const [sending, setSending] = useState(false);
 
 
@@ -18,17 +18,16 @@ const Form = ({ onSuccess, onError }) => {
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
-        setSending(true);
-        // We try to call mockContactApi
-        try {
-          await mockContactApi();
-          setSending(false);
-          onSuccess()
-        } catch (err) {
-          setSending(false);
-          onError(err);
-        }
-      
+      setSending(true);
+      try {
+        await mockContactApi();
+        setSending(false);
+        onSuccess()
+      } catch (err) {
+        setSending(false);
+        onError(err);
+      }
+
     },
     [onSuccess, onError]
   );
@@ -36,8 +35,8 @@ const Form = ({ onSuccess, onError }) => {
     <form onSubmit={sendContact}>
       <div className="row">
         <div className="col">
-          <Field value={name} onChange={(e)=>setName(e.target.value)} placeholder="" label="Nom" />
-          <Field value={prenom} onChange={(e)=>setPrenom(e.target.value)} placeholder="" label="Prénom" />
+          <Field value={name} onChange={(e) => setName(e.target.value)} placeholder="" label="Nom" />
+          <Field value={prenom} onChange={(e) => setPrenom(e.target.value)} placeholder="" label="Prénom" />
           <Select
             selection={["Personel", "Entreprise"]}
             onChange={() => null}
@@ -45,7 +44,7 @@ const Form = ({ onSuccess, onError }) => {
             type="large"
             titleEmpty
           />
-          <Field value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="" label="Email" />
+          <Field value={email} onChange={(e) => setEmail(e.target.value)} placeholder="" label="Email" />
           <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
             {sending ? "En cours" : "Envoyer"}
           </Button>
