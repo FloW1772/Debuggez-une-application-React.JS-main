@@ -25,9 +25,8 @@ export const DataProvider = ({ children }) => {
     try {
       const datasApi = await api.loadData();
       setData(datasApi);
-
       // Update last event using a separate sort and assignment in useEffect
-      setLast(datasApi?.events.sort((a, b) => new Date(b.date) - new Date(a.date))[0]); // Sort by date descending and grab first item
+      setLast(datasApi?.events.sort((a, b) => new Date(b.date) < new Date(a.date) ? -1 : 1)[0]); // Sort by date descending and grab first item
     } catch (err) {
       setError(err);
     }
@@ -36,7 +35,7 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     if (data) return; // Exit if data already loaded
     getData();
-  }, [data, getData]); // Make getData rerun if data changes
+  }); // Make getData rerun if data changes
 
   return (
     <DataContext.Provider

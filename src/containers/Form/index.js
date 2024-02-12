@@ -4,7 +4,7 @@ import Field, { FIELD_TYPES } from "../../components/Field";
 import Select from "../../components/Select";
 import Button, { BUTTON_TYPES } from "../../components/Button";
 
-const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 1000); })
+const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 800); })
 
 const Form = ({ onSuccess, onError }) => {
   const[name,setName]=useState("")
@@ -18,16 +18,17 @@ const Form = ({ onSuccess, onError }) => {
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
-      setSending(true);
-      // We try to call mockContactApi
-      try {
-        await mockContactApi();
-        setSending(false);
-        onSuccess()
-      } catch (err) {
-        setSending(false);
-        onError(err);
-      }
+        setSending(true);
+        // We try to call mockContactApi
+        try {
+          await mockContactApi();
+          setSending(false);
+          onSuccess()
+        } catch (err) {
+          setSending(false);
+          onError(err);
+        }
+      
     },
     [onSuccess, onError]
   );
